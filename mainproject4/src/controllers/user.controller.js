@@ -209,10 +209,15 @@ const refreshAccessToken= asyncHandler(async (req,res) => {
          )
      )
    } catch (error) {
-    throw new ApiError(500, "Something went wrong");
+    throw new ApiError(401, error?.message || "Something went wrong");
     
    }
 
 })
 
-export {registerUser, loginUser, logoutUser}
+export {
+    registerUser,
+    loginUser,
+    logoutUser,
+    refreshAccessToken
+}
