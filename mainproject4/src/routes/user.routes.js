@@ -50,7 +50,7 @@ router.route("/change-avatar").patch(verifyJWT,
 
 )
 
-router.route("/cover-image").patch(verifyJWT,
+router.route("cover-image").patch(verifyJWT,
     upload.single("coverImage"), changeUserCoverImage
 )
 router.route("/channel/:username").get(verifyJWT,
