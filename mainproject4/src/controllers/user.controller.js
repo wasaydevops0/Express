@@ -406,5 +406,6 @@ export {
     getCurrentUser,
     changeUserDetails,
     changeUserAvatar,
-    changeUserCoverImage
+    changeUserCoverImage,
+    getWatchHistory
 }
