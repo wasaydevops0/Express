@@ -13,13 +13,17 @@ const options = {
     
 const uploadCloudinary = async (filePath) => {
     try {
-        if (!filePath) return null
-        const response = await cloudinary.uploader.upload(filePath, options)
-      
-        return response
-        
+        if (!filePath) return null;
+        const response = await cloudinary.uploader.upload(filePath, options);
+        // Delete the local temporary file after successful upload
+        fs.unlinkSync(filePath);
+        return response;
     } catch (error) {
-        fs.unlinkSync(filePath)       
+        // Delete the local temporary file if the upload failed
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
+        return null;
     }
 }
 
