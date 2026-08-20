@@ -37,8 +37,8 @@ const registerUser = asyncHandler(async (req, res) => {
     console.log(req)
     console.log("Files received:", req.files);
     console.log("Body received:", req.body);
-    const avatarLocalPath = req.files?.avatar?.[0]?.path;
-    const coverImageLocalPath = req.files?.coverImage?.[0]?.path;
+    const avatarLocalPath = req.files?.avatar?.[0]?.buffer;
+    const coverImageLocalPath = req.files?.coverImage?.[0]?.buffer;
 
     if (!avatarLocalPath) {
         throw new ApiError(400, "Avatar image is required");
@@ -278,7 +278,7 @@ const changeUserDetails = asyncHandler(async (req,res) => {
 })
 
 const changeUserAvatar = asyncHandler(async (req,res) => {
-    const avatarLocalPath = req.file?.path;
+    const avatarLocalPath = req.file?.buffer;
     if (!avatarLocalPath) {
         throw new ApiError(400,"Avatar is required")
     }
@@ -311,7 +311,7 @@ const changeUserAvatar = asyncHandler(async (req,res) => {
 })
 
 const changeUserCoverImage = asyncHandler(async (req,res) => {
-    const coverImageLocalPath = req.file?.path;
+    const coverImageLocalPath = req.file?.buffer;
     if (!coverImageLocalPath) {
         throw new ApiError(400,"Cover Image is required")
     }

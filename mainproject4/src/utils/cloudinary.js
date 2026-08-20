@@ -11,21 +11,24 @@ const options = {
     overwrite: true,
 };
     
-const uploadCloudinary = async (filePath) => {
-    try {
-        if (!filePath) return null;
-        const response = await cloudinary.uploader.upload(filePath, options);
-        // Delete the local temporary file after successful upload
-        fs.unlinkSync(filePath);
-        return response;
-    } catch (error) {
-        console.error("Cloudinary Upload Error:", error);
-        // Delete the local temporary file if the upload failed
-        if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
-        }
-        return null;
-    }
+const uploadCloudinary = async (fileBuffer) => {
+    return new Promise((resolve, reject) => {
+        if (!fileBuffer) return resolve(null);
+        
+        const uploadStream = cloudinary.uploader.upload_stream(
+            options,
+            (error, result) => {
+                if (error) {
+                    console.error("Cloudinary Upload Error:", error);
+                    resolve(null);
+                } else {
+                    resolve(result);
+                }
+            }
+        );
+        
+        uploadStream.end(fileBuffer);
+    });
 }
 
 export { uploadCloudinary };
